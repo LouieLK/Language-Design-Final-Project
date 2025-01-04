@@ -19,11 +19,15 @@ def main():
             username = input("> (Format: UserName): ").strip()
             if username == "":
                 print("Please enter a username.")
-            else:
-                manager.create_user(username)
+                continue
+            manager.create_user(username)
                 
         elif action == "2":
-            username, sheet_name = input("> (Format: UserName SheetName): ").split()
+            try:
+                username, sheet_name = input("> (Format: UserName SheetName): ").split()
+            except:
+                print("Please enter data as > (Format: UserName SheetName)")
+                continue
             user = manager.get_user(username)
             if user:
                 new_sheet = user.create_sheet(sheet_name) 
@@ -33,7 +37,11 @@ def main():
                     print(f'Sheet "{sheet_name}" already exists for "{username}".')
 
         elif action == "3":
-            username, sheet_name = input("> (Format: UserName SheetName): ").split()
+            try:
+                username, sheet_name = input("> (Format: UserName SheetName): ").split()
+            except:
+                print("Please enter data as > (Format: UserName SheetName)")       
+                continue        
             user = manager.get_user(username)
             sheet = manager.get_sheet(username, sheet_name)
             if sheet:
@@ -42,13 +50,21 @@ def main():
                 print("Sheet or user not found.")
 
         elif action == "4":
-            username, sheet_name = input("> (Format: UserName SheetName): ").split()
+            try:
+                username, sheet_name = input("> (Format: UserName SheetName): ").split()
+            except:
+                print("Please enter data as > (Format: UserName SheetName)")    
+                continue
             user = manager.get_user(username)
             sheet = manager.get_sheet(username, sheet_name)
             if sheet:
                 print(sheet.check_sheet())
                 try:
-                    row, col, value = input("> (Format: row col val): ").split()
+                    try:
+                        row, col, value = input("> (Format: row col val): ").split()
+                    except:
+                        print("Please enter data as > (Format: row col val)")    
+                        continue
                     row, col = int(row) - 1, int(col) - 1  
                     if "+" in value or "-" in value or "*" in value or "/" in value:
                         value = eval(value)
@@ -62,7 +78,11 @@ def main():
                 print("Sheet or user not found.")
 
         elif action == "5":
-            username, sheet_name, access_right = input("> (Format: UserName SheetName E(Editable) or R(ReadOnly)): ").split()
+            try:
+                username, sheet_name, access_right = input("> (Format: UserName SheetName E(Editable) or R(ReadOnly)): ").split()
+            except:
+                print("Please enter data as > (Format: UserName SheetName E(Editable) or R(ReadOnly)))")    
+                continue
             sheet = manager.get_sheet(username, sheet_name)
             user=manager.get_user(username)
             if sheet:
@@ -74,8 +94,11 @@ def main():
                 print("Sheet not found.")
 
         elif action == "6":
-            username, sheet_name, collaborator_name, operation = input("> UserName SheetName Collaborator Operation(Share/Unshare): ").split()
-
+            try:
+                username, sheet_name, collaborator_name, operation = input("> (Format: UserName SheetName Collaborator Operation(Share/Unshare)): ").split()
+            except:
+                print("Please enter data as > (Format: UserName SheetName Collaborator Operation(Share/Unshare))")    
+                continue
             sheet = manager.get_sheet(username, sheet_name)
     
             if sheet:
@@ -93,6 +116,9 @@ def main():
 
         elif action == "7":
             username = input("> (Format: UserName): ").strip()
+            if username == "":
+                print("Please enter a username.")
+                continue
             user = manager.get_user(username) 
             if user:
                 editable_sheets = []
