@@ -15,11 +15,15 @@ class Manager:
 
     def get_user(self, username):
         if username not in self.users:
-            print(f'User is not found.')
+            print(f'User "{username}" is not found.')
         else: 
             return self.users.get(username)
 
-    def get_sheet(self, username, sheet_name):
-        user = self.get_user(username)
+    def get_sheet(self, user, sheet_name):
         if user:
-            return user.sheets.get(sheet_name)
+            sheet = user.sheets.get(sheet_name)
+            if sheet:
+                return sheet
+            else:
+                print(f'Sheet "{sheet_name}" not found in User "{user.username}"')
+

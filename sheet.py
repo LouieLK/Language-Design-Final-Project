@@ -40,6 +40,9 @@ class Sheet:
             print(f"{self.owner.username} cannot share the sheet with themselves.")
         elif collaborator.username in self.permissions:
             print(f"{collaborator.username} already has access to the sheet '{self.name}'.")
+        elif self.name in collaborator.sheets:
+            print(f"{collaborator.username} already has the file name '{self.name}'.")
+
         else:
             self.permissions[collaborator.username] = "Editable"
             collaborator.sheets[self.name] = self

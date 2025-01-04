@@ -11,5 +11,8 @@ class User:
         if sheet_name not in self.sheets:
             new_sheet = Sheet(sheet_name, self)
             self.sheets[sheet_name] = new_sheet
+            print(f'Create a sheet named "{sheet_name}" for User "{self.username}".')
             return new_sheet
-        return None
+        else:
+            print(f'Sheet "{sheet_name}" already exists for User "{self.username}".')
+            return None

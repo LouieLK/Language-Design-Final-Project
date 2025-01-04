@@ -30,11 +30,7 @@ def main():
                 continue
             user = manager.get_user(username)
             if user:
-                new_sheet = user.create_sheet(sheet_name) 
-                if new_sheet: #examine the sheet is in the list or not
-                    print(f'Create a sheet named "{sheet_name}" for "{username}".')
-                else:
-                    print(f'Sheet "{sheet_name}" already exists for "{username}".')
+                user.create_sheet(sheet_name) 
 
         elif action == "3":
             try:
@@ -43,11 +39,9 @@ def main():
                 print("Please enter data as > (Format: UserName SheetName)")       
                 continue        
             user = manager.get_user(username)
-            sheet = manager.get_sheet(username, sheet_name)
+            sheet = manager.get_sheet(user, sheet_name)
             if sheet:
                 print(sheet.check_sheet())
-            else:
-                print("Sheet or user not found.")
 
         elif action == "4":
             try:
@@ -56,7 +50,7 @@ def main():
                 print("Please enter data as > (Format: UserName SheetName)")    
                 continue
             user = manager.get_user(username)
-            sheet = manager.get_sheet(username, sheet_name)
+            sheet = manager.get_sheet(user, sheet_name)
             if sheet:
                 print(sheet.check_sheet())
                 try:
@@ -74,8 +68,6 @@ def main():
                     print(sheet.check_sheet())
                 except Exception as e:
                     print("Error:", e)
-            else:
-                print("Sheet or user not found.")
 
         elif action == "5":
             try:
@@ -83,15 +75,13 @@ def main():
             except:
                 print("Please enter data as > (Format: UserName SheetName E(Editable) or R(ReadOnly)))")    
                 continue
-            sheet = manager.get_sheet(username, sheet_name)
-            user=manager.get_user(username)
+            user = manager.get_user(username)
+            sheet = manager.get_sheet(user, sheet_name)
             if sheet:
                 if access_right=="e" or access_right=="E":
                     sheet.change_access_right("Editable",user)
                 elif access_right=="r"or access_right=="R":
                     sheet.change_access_right("ReadOnly",user)
-            else:
-                print("Sheet not found.")
 
         elif action == "6":
             try:
@@ -99,26 +89,19 @@ def main():
             except:
                 print("Please enter data as > (Format: UserName SheetName Collaborator Operation(Share/Unshare))")    
                 continue
-            sheet = manager.get_sheet(username, sheet_name)
-    
+            user = manager.get_user(username)
+            sheet = manager.get_sheet(user, sheet_name)
             if sheet:
                 if operation=="Share":
                     collborator=manager.get_user(collaborator_name)
                     if collborator:
                         sheet.share_sheet(collborator)
-                    else:
-                        print(f"collborator {collaborator_name} does not exist.")
                 elif operation=="Unshare":
                     collborator=manager.get_user(collaborator_name)
                     if collborator:
                         sheet.unshare_sheet(collborator)
-                    else:
-                        print(f"collborator {collaborator_name} does not exist.")
                 else:
                     print("Invalid operation. Please use 'Share' or 'Unshare'.")
-            else:
-                print("Sheet or user not found.")
-
 
         elif action == "7":
             username = input("> (Format: UserName): ").strip()
@@ -140,8 +123,6 @@ def main():
                 print(f"User: {username}")
                 print(f"Sheets (Editable): {', '.join(editable_sheets) or 'None'}")
                 print(f"Sheets (ReadOnly): {', '.join(readonly_sheets) or 'None'}")
-            else:
-                print(f"User {username} does not exist.")
         
         else:
             print("Invalid option.")
