@@ -7,9 +7,17 @@ class Sheet:
         self.content = [[0 for _ in range(3)] for _ in range(3)]  # Default 3x3 space
         self.permissions = {"owner": owner.username}
     
-    def check_sheet(self):
-        return "\n".join([", ".join(map(str, row)) for row in self.content])
+    # def check_sheet(self):
+    #     return "\n".join([", ".join(map(str, row)) for row in self.content])
 
+    def check_sheet(self):
+        column_widths = [max(len(str(item)) for item in column) for column in zip(*self.content)]
+        aligned_rows = []
+        for row in self.content:
+            aligned_row = [str(item).rjust(width) for item, width in zip(row, column_widths)]
+            aligned_rows.append(", ".join(aligned_row))
+        return "\n".join(aligned_rows)
+    
     def update_cell(self, row, col, value):
         try:
             if self.access_right == "ReadOnly":
