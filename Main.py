@@ -1,4 +1,4 @@
-import Manager
+from manager import Manager
 #main 
 def main():
     manager = Manager()
@@ -17,7 +17,10 @@ def main():
         if action == "1":
             print("Please enter a username.")
             username = input("> (Format: UserName): ").strip()
-            manager.create_user(username)
+            if username == "":
+                print("Please enter a username.")
+            else:
+                manager.create_user(username)
                 
         elif action == "2":
             username, sheet_name = input("> (Format: UserName SheetName): ").split()
