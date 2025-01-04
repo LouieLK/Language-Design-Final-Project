@@ -23,10 +23,3 @@ class Manager:
         user = self.get_user(username)
         if user:
             return user.sheets.get(sheet_name)
-
-    def check_user(self,username):
-        if username not in self.users:
-            self.users[username]=User(username)
-            return self.users.get(username)
-        else: 
-            return 

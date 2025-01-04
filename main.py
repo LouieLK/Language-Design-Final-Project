@@ -103,11 +103,17 @@ def main():
     
             if sheet:
                 if operation=="Share":
-                    collborator=manager.check_user(collaborator_name)
-                    sheet.share_sheet(collborator)
+                    collborator=manager.get_user(collaborator_name)
+                    if collborator:
+                        sheet.share_sheet(collborator)
+                    else:
+                        print(f"collborator {collaborator_name} does not exist.")
                 elif operation=="Unshare":
                     collborator=manager.get_user(collaborator_name)
-                    sheet.unshare_sheet(collborator)
+                    if collborator:
+                        sheet.unshare_sheet(collborator)
+                    else:
+                        print(f"collborator {collaborator_name} does not exist.")
                 else:
                     print("Invalid operation. Please use 'Share' or 'Unshare'.")
             else:
